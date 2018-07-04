@@ -1,15 +1,29 @@
+
+
+
+#REFERENCE FILE FOR BOOK
 # packages needed for chapter 1
+install.packages("dplyr")
 library(dplyr)
+install.packages("tidyr")
 library(tidyr)
+
 library(ggplot2)
+install.packages("vioplot")
 library(vioplot)
+install.packages("ascii")
 library(ascii)
+install.packages("corrplot")
 library(corrplot)
+install.packages("descr")
 library(descr)
+getwd()
 
 # Import the datasets needed for chapter 1
-PSDS_PATH <- file.path('~', 'statistics-for-data-scientists')
-dir.create(file.path(PSDS_PATH, 'figures'))
+PSDS_PATH <- file.path('C:/Users/SeaBur/GitCentral/statistics-for-data-scientists')
+# For the above I had to change the file.path to the physical path...voila...it worked
+
+dir.create(file.path(PSDS_PATH, 'figures')) #******didn't use this step, but need to understand what it was doing*******
 
 state <- read.csv(file.path(PSDS_PATH, 'data', 'state.csv'))
 dfw <- read.csv(file.path(PSDS_PATH, 'data', 'dfw_airline.csv'))
@@ -19,18 +33,25 @@ kc_tax <- read.csv(file.path(PSDS_PATH, 'data', 'kc_tax.csv'))
 lc_loans <- read.csv(file.path(PSDS_PATH, 'data', 'lc_loans.csv'))
 airline_stats <- read.csv(file.path(PSDS_PATH, 'data', 'airline_stats.csv'), stringsAsFactors = FALSE)
 airline_stats$airline <- ordered(airline_stats$airline, levels=c('Alaska', 'American', 'Jet Blue', 'Delta', 'United', 'Southwest'))
+
+
 ## Code to create state table
+
+      # SPB - basically copying to work with data and not change raw data
 state_asc <- state
+
+      #SPB - this is just cleaning it up for visualization
 state_asc[["Population"]] <- formatC(state_asc[["Population"]], format="d", digits=0, big.mark=",")
 ascii(state_asc[1:8,], digits=c(0, 0,1), align=c("l", "l", "r", "r"), caption="A few rows of the +data.frame state+ of population and murder rate by state.")
 
 ## Code snippet 1.1
 mean(state[["Population"]])
-mean(state[["Population"]], trim=0.1)
+mean(state[["Population"]], trim=0.1) #trimming off the top and bottom 20% to reduce outliers
 median(state[["Population"]])
 
 ## Code snippet 1.2
 mean(state[["Murder.Rate"]])
+      # spb - install.packages("matrixStats")
 library("matrixStats")
 weighted.mean(state[["Murder.Rate"]], w=state[["Population"]])
 
@@ -51,17 +72,22 @@ ascii(
 ## Code snippet 1.5
 boxplot(state[["Population"]]/1000000, ylab="Population (millions)")
 
-## Code for Figure 2
+## Code for Figure 2 
+
+      # spb - need to learn more about this
 png(filename=file.path(PSDS_PATH, "figures", "psds_0102.png"), width = 3, height=4, units='in', res=300)
 par(mar=c(0,4,0,0)+.1)
 boxplot(state[["Population"]]/1000000, ylab="Population (millions)")
 dev.off()
 
 ## Code snippet 1.6
+      #This is cool...breaks things up into
 breaks <- seq(from=min(state[["Population"]]), to=max(state[["Population"]]), length=11)
 pop_freq <- cut(state[["Population"]], breaks=breaks, right=TRUE, include.lowest = TRUE)
 state['PopFreq'] <- pop_freq
 table(pop_freq)
+
+## ..... stopped at work 5:30 7.3.18
 
 ## Code for FreqTable
 state_abb <- state %>%
