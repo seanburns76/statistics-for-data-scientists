@@ -180,7 +180,7 @@ dev.off()
 kc_tax0 <- subset(kc_tax, TaxAssessedValue < 750000 & SqFtTotLiving>100 &
                   SqFtTotLiving<3500)
 nrow(kc_tax0)
-
+install.packages("hexbin")
 ## Code snippet 1.13
 ggplot(kc_tax0, (aes(x=SqFtTotLiving, y=TaxAssessedValue))) + 
   stat_binhex(colour="white") + 
@@ -204,6 +204,12 @@ ggplot(kc_tax0, aes(SqFtTotLiving, TaxAssessedValue)) +
   geom_point( alpha=0.1) + 
   geom_density2d(colour="white") + 
   labs(x="Finished Square Feet", y="Tax Assessed Value")
+
+
+# spb - left off here at work 7.5.18
+
+
+
 
 ## Code for figure 9
 
